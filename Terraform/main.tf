@@ -14,7 +14,7 @@ module "eks" {
   ClusterRoleArn      = module.iam.cluster_arn
   attach_to_node_role = module.iam.ec2_roles_arn
   node_group_name     = "bogdan-eks-node-group"
-  ami_type            = "AL2023_x86_64"
+  ami_type            = "AL2023_x86_64_STANDARD"
   instance_type       = ["t2.medium"]
   key_name            = "vm1key"
   depends_on          = [module.iam, module.vpc]
