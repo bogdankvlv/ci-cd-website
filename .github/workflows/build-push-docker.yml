@@ -1,0 +1,83 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and tag Docker image [incremental tag]
+        run: |
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}site1:${{ github.ref_name }}" .
+        working-directory: Docker/DockerForNode1
+
+      - name: Build and tag Docker image [latest tag]
+        run: |
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}site1:latest" .
+        working-directory: Docker/DockerForNode1
+
+      - name: Log in to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}site1:${{ github.ref_name }}"
+        working-directory: Docker/DockerForNode1
+
+      - name: Push Docker image to Docker Hub [latest tag]
+        run: |
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}site1:latest"
+        working-directory: Docker/DockerForNode1
+
+      - name: Set output for next workflow
+        run: |
+          echo "image_tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+  
+  build_and_push_v2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and tag Docker image [incremental tag]
+        run: |
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}site2:${{ github.ref_name }}" .
+        working-directory: Docker/DockerForNode2
+
+      - name: Build and tag Docker image [latest tag]
+        run: |
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}site2:latest" .
+        working-directory: Docker/DockerForNode2
+
+      - name: Log in to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}site2:${{ github.ref_name }}"
+        working-directory: Docker/DockerForNode2
+
+      - name: Push Docker image to Docker Hub [latest tag]
+        run: |
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}site2:latest"
+        working-directory: Docker/DockerForNode2
+
+      - name: Set output for next workflow
+        run: |
+          echo "image_tag_v2=${{ github.ref_name }}" >> $GITHUB_OUTPUT
