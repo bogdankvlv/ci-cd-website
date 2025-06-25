@@ -21,7 +21,7 @@ variable "node_group_name" {
 variable "ami_type" {
     description = "The AMI type for the EKS node group" 
     type        = string
-    default     = "AL2_x86_64"
+    
 }
 variable "instance_type" {
   description = "The instance type for the EKS node group"
