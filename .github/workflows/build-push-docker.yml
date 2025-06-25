@@ -18,12 +18,12 @@ jobs:
 
       - name: Build and tag Docker image [incremental tag]
         run: |
-          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}site1:${{ github.ref_name }}" .
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/site1:${{ github.ref_name }}" .
         working-directory: Docker/DockerForNode1
 
       - name: Build and tag Docker image [latest tag]
         run: |
-          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}site1:latest" .
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/site1:latest" .
         working-directory: Docker/DockerForNode1
 
       - name: Log in to Docker Hub
@@ -32,12 +32,12 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}site1:${{ github.ref_name }}"
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}/site1:${{ github.ref_name }}"
         working-directory: Docker/DockerForNode1
 
       - name: Push Docker image to Docker Hub [latest tag]
         run: |
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}site1:latest"
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}/site1:latest"
         working-directory: Docker/DockerForNode1
 
       - name: Set output for next workflow
@@ -56,12 +56,12 @@ jobs:
 
       - name: Build and tag Docker image [incremental tag]
         run: |
-          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}site2:${{ github.ref_name }}" .
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/site2:${{ github.ref_name }}" .
         working-directory: Docker/DockerForNode2
 
       - name: Build and tag Docker image [latest tag]
         run: |
-          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}site2:latest" .
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/site2:latest" .
         working-directory: Docker/DockerForNode2
 
       - name: Log in to Docker Hub
@@ -70,12 +70,12 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}site2:${{ github.ref_name }}"
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}/site2:${{ github.ref_name }}"
         working-directory: Docker/DockerForNode2
 
       - name: Push Docker image to Docker Hub [latest tag]
         run: |
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}site2:latest"
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}/site2:latest"
         working-directory: Docker/DockerForNode2
 
       - name: Set output for next workflow
