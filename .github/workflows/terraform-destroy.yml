@@ -25,6 +25,7 @@ jobs:
           terraform_version: 1.9.0
 
       - name: ⚙️ Terraform init
+        working-directory: Terraform
         run: terraform init
 
       - name: 🧨 Terraform destroy
